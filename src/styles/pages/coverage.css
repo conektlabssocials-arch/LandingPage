@@ -1,0 +1,37 @@
+.pagehero{ padding-block:clamp(48px,7vw,90px) clamp(28px,4vw,52px); }
+.covhero{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,4vw,60px); align-items:center; }
+.covhero__copy .display{ margin-top:.3em; }
+.covhero__copy .lead{ margin:1em 0 1.6em; }
+.covhero__media{ border-radius:var(--r-lg); overflow:hidden; aspect-ratio:5/4; box-shadow:var(--sh-2); background:var(--canvas-2); }
+.covhero__media img{ width:100%; height:100%; object-fit:cover; }
+
+.covstats{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+.covstats .statnum{ display:flex; align-items:baseline; }
+
+.regions{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.region{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:28px 26px; position:relative; }
+.region h3{ margin:6px 0 .4em; }
+.region p{ margin:0; color:var(--muted); }
+.region__live{ display:inline-flex; align-items:center; gap:.45em; font-family:var(--font-display); font-weight:700; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--green-deep); }
+.region__live::before{ content:""; width:8px; height:8px; border-radius:50%; background:var(--accent-bright); box-shadow:0 0 0 3px var(--green-tint); }
+.region--hl{ grid-column:1 / -1; background:var(--green-tint); border-color:var(--green-tint-2); }
+.region--hl .h3{ font-size:clamp(1.6rem,2.6vw,2.2rem); }
+.region__zones{ margin-top:18px; padding-top:16px; border-top:1px solid var(--green-tint-2); color:var(--green-deep); font-weight:600; font-size:.98rem; }
+
+.invgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.inv{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:var(--r); padding:28px 24px; }
+.inv__n{ font-family:var(--font-display); font-weight:800; font-size:1.9rem; letter-spacing:-.03em; color:var(--accent-bright); }
+.inv__l{ color:rgba(255,255,255,.7); margin-top:6px; }
+
+@media (max-width: 900px){
+  .covhero{ grid-template-columns:1fr; }
+  .covhero__media{ display:none; }
+  .covstats{ grid-template-columns:1fr 1fr; row-gap:30px; }
+  .regions{ grid-template-columns:1fr 1fr; } .region--hl{ grid-column:1 / -1; }
+  .invgrid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 560px){
+  .covstats, .regions, .invgrid{ grid-template-columns:1fr; }
+  .region--hl{ grid-column:auto; }
+  .covhero__copy .lead{ margin-bottom:1.2em; }
+}
