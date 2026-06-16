@@ -100,11 +100,11 @@ export default function Home() {
       <section className="section--tight canvas">
         <div className="wrap statstrip">
           {[
+            { value: 3, suffix: 'L+', label: 'Billboards ', delay: '' },
             { value: 50, suffix: 'K+', label: 'Premium sites', delay: '' },
             { value: 150, suffix: '+', label: 'Cities covered', delay: 'd1' },
             { value: 95, suffix: '%', label: 'Visibility rate', delay: 'd2' },
             { value: 100, suffix: '+', label: 'Campaigns executed', delay: 'd3' },
-            { value: 24, suffix: '×7', label: 'Brand presence', delay: 'd4' },
           ].map((stat) => (
             <Reveal key={stat.label} className="stat" delay={stat.delay}>
               <div className="statnum">
