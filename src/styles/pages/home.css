@@ -25,6 +25,52 @@
 .why__card p{ margin:0; color:rgba(255,255,255,.66); font-size:.98rem; }
 
 .brands__title{ text-align:center; font-family:var(--font-display); font-weight:600; color:var(--faint); letter-spacing:.04em; margin:0 0 28px; }
+.proofshowcase{ position:relative; background:linear-gradient(180deg, #fff 0%, #fbfcf8 48%, var(--canvas) 100%); overflow:hidden; }
+.proofshowcase::after{ content:""; position:absolute; left:50%; bottom:-90px; width:min(760px,82vw); height:220px; transform:translateX(-50%); background-image:radial-gradient(rgba(54,181,68,.28) 24%, transparent 25%); background-size:13px 13px; pointer-events:none; opacity:.45; }
+.proofshowcase .wrap{ position:relative; z-index:1; }
+.proofshowcase .kicker{ color:#4fbf35; }
+.proofshowcase .kicker::before{ background:#87EA5C; }
+.proofshowcase__head{ align-items:flex-start; }
+.proofshowcase__head p{ max-width:48ch; }
+.proofshowcase__rows{ display:grid; gap:12px; margin-inline:calc(var(--gut) * -1); overflow:hidden; padding:8px var(--gut) 18px; -webkit-mask-image:linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image:linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.proofshowcase__rail{ overflow:hidden; padding-block:2px; }
+.proofshowcase__track{ display:flex; align-items:stretch; gap:18px; width:max-content; transform:translate3d(-50%,0,0); animation:campaign-marquee 72s linear infinite; will-change:transform; }
+.proofshowcase__rail--bottom .proofshowcase__track{ gap:16px; animation-duration:64s; animation-delay:-22s; }
+.proofshowcase__cta{ display:flex; justify-content:center; margin-top:clamp(28px,4vw,44px); }
+.proofshowcase__cta .btn{ background:#87EA5C; border-color:#87EA5C; color:#10160e; box-shadow:0 16px 34px rgba(135,234,92,.28); }
+.proofshowcase__cta .btn:hover{ background:var(--accent-bright); border-color:var(--accent-bright); }
+.campaigncard{ position:relative; flex:0 0 clamp(340px,31vw,454px); height:clamp(338px,33vw,410px); overflow:hidden; border:1px solid rgba(20,22,15,.1); border-radius:20px; background:var(--ink); box-shadow:0 14px 34px rgba(20,22,15,.08), 0 2px 8px rgba(20,22,15,.05); }
+.campaigncard--wide{ flex-basis:clamp(460px,43vw,620px); }
+.campaigncard--portrait{ flex-basis:clamp(340px,29vw,430px); }
+.campaigncard--compact{ flex-basis:clamp(330px,30vw,410px); }
+.campaigncard--portrait{ height:clamp(338px,33vw,410px); }
+.campaigncard--compact{ height:clamp(300px,29vw,358px); }
+.proofshowcase__rail--bottom .campaigncard{ height:clamp(300px,29vw,358px); }
+.campaigncard__media{ position:absolute; inset:0; overflow:hidden; background:var(--canvas-2); }
+.campaigncard__media img,
+.campaigncard__media video{ width:100%; height:100%; object-fit:cover; transition:transform .55s ease; }
+.campaigncard:hover .campaigncard__media img,
+.campaigncard:hover .campaigncard__media video{ transform:scale(1.035); }
+.campaigncard__media::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,22,15,.08) 0%, rgba(20,22,15,.08) 42%, rgba(20,22,15,.84) 100%); pointer-events:none; }
+.campaigncard__body{ position:absolute; z-index:1; inset:auto 0 0; padding:clamp(18px,2vw,26px); color:#fff; }
+.campaigncard__body h3{ color:#fff; font-size:clamp(1.16rem,1.5vw,1.45rem); line-height:1.12; letter-spacing:-.015em; max-width:24ch; text-shadow:0 2px 14px rgba(0,0,0,.38); }
+.campaigncard__location{ display:flex; align-items:flex-start; gap:8px; margin:9px 0 0; color:rgba(255,255,255,.82); font-size:.92rem; line-height:1.45; max-width:42ch; text-shadow:0 2px 12px rgba(0,0,0,.34); }
+.campaigncard__location svg{ width:16px; height:16px; color:#87EA5C; flex:0 0 auto; margin-top:2px; filter:drop-shadow(0 2px 8px rgba(0,0,0,.35)); }
+@keyframes campaign-marquee{
+  from{ transform:translate3d(-50%,0,0); }
+  to{ transform:translate3d(0,0,0); }
+}
+@media (hover:hover) and (pointer:fine){
+  .proofshowcase__rows:hover .proofshowcase__track{ animation-play-state:paused; }
+}
+@media (prefers-reduced-motion: reduce){
+  .proofshowcase__rows{ overflow:visible; -webkit-mask-image:none; mask-image:none; }
+  .proofshowcase__rail{ overflow-x:auto; scrollbar-width:none; }
+  .proofshowcase__rail::-webkit-scrollbar{ display:none; }
+  .proofshowcase__track{ animation:none; transform:none; }
+  .campaigncard__media img,
+  .campaigncard__media video{ transition:none; }
+}
 .cslist{ display:flex; flex-direction:column; gap:24px; }
 
 .process{ display:grid; grid-template-columns:repeat(5,1fr); gap:0; border-top:2px solid var(--line); }
@@ -46,12 +92,31 @@ html[data-theme] .process__n{ color:var(--line); }
   .statstrip{ grid-template-columns:repeat(3,1fr); row-gap:30px; }
   .process{ grid-template-columns:1fr 1fr; }
   .process__step{ border-bottom:1px solid var(--line-2); }
+  .proofshowcase__rows{ gap:10px; }
+  .campaigncard{ flex-basis:clamp(320px,43vw,390px); }
+  .campaigncard--wide{ flex-basis:clamp(390px,56vw,520px); }
+  .campaigncard--portrait,
+  .campaigncard--compact{ flex-basis:clamp(300px,42vw,370px); }
+  .proofshowcase__track{ animation-duration:78s; }
+  .proofshowcase__rail--bottom .proofshowcase__track{ animation-duration:70s; }
 }
 @media (max-width: 560px){
   .why__grid{ grid-template-columns:1fr; }
   .statstrip{ grid-template-columns:1fr 1fr; gap:20px 16px; }
   .statstrip .stat{ text-align:left; }
   .process{ grid-template-columns:1fr; }
+  .proofshowcase__rows{ gap:10px; margin-inline:calc(var(--gut) * -1); overflow:visible; padding:4px var(--gut) 16px; -webkit-mask-image:none; mask-image:none; }
+  .proofshowcase__rail{ overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-inline:contain; padding-bottom:6px; scrollbar-width:none; }
+  .proofshowcase__rail::-webkit-scrollbar{ display:none; }
+  .proofshowcase__track,
+  .proofshowcase__rail--bottom .proofshowcase__track{ animation:none; transform:none; gap:14px; padding-right:var(--gut); }
+  .campaigncard,
+  .campaigncard--wide,
+  .campaigncard--portrait,
+  .campaigncard--compact{ flex-basis:calc(100vw - (var(--gut) * 2) - 18px); height:360px; min-width:0; border-radius:18px; scroll-snap-align:center; }
+  .campaigncard__body{ padding:18px 16px; }
+  .campaigncard__body h3{ font-size:1.15rem; max-width:22ch; }
+  .campaigncard__location{ font-size:.86rem; line-height:1.35; }
   .hero .chips{ gap:8px; }
   .hero .chip{ font-size:.86rem; padding:.55em .85em; }
 }

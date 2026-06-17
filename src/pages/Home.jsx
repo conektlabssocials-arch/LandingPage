@@ -4,6 +4,7 @@ import Reveal from '../components/Reveal'
 import CountUp from '../components/CountUp'
 import CtaBand, { CtaButton, ArrowIcon } from '../components/CtaBand'
 import LogoWall from '../components/LogoWall'
+import ProofShowcase from '../components/ProofShowcase'
 import '../styles/pages/home.css'
 
 const ArrowLink = () => (
@@ -189,6 +190,8 @@ export default function Home() {
       </section>
 
       <LogoWall />
+
+      <ProofShowcase />
 
       <section className="section canvas" id="work">
         <div className="wrap">

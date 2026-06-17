@@ -22,6 +22,8 @@ a.ccard:hover{ border-color:var(--accent); transform:translateX(3px); }
 .cform textarea{ resize:vertical; }
 .cform input:focus, .cform select:focus, .cform textarea:focus{ outline:none; border-color:var(--accent); background:#fff; }
 .cform input.invalid, .cform textarea.invalid{ border-color:#d23; background:#fff5f5; }
+.cform__error{ margin:0 0 14px; padding:12px 14px; border:1px solid #f0b6b6; border-radius:var(--r-sm); background:#fff5f5; color:#a01826; font-weight:700; font-size:.92rem; }
+.cform .btn:disabled{ cursor:not-allowed; opacity:.72; transform:none; }
 .cform__note{ font-size:.82rem; color:var(--faint); margin:14px 0 0; text-align:center; }
 .cform__success{ text-align:center; padding:30px 10px; }
 .cform__check{ width:64px; height:64px; border-radius:50%; background:var(--green-tint); color:var(--accent); display:grid; place-items:center; margin:0 auto 18px; }
