@@ -144,9 +144,9 @@ const campaignWork = [
     image: '/assets/img/cs-inorbit.jpg',
     alt: 'Inorbit Mall outdoor campaign planning',
     type: 'Billboard',
-    city: 'Mumbai',
+    city: 'Hubballi',
     title: 'Inorbit Mall - Retail Visibility',
-    location: 'Premium retail catchments, Mumbai',
+    location: 'Premium retail catchments, Hubballi',
     metrics: [
       { value: '120+', label: 'Sites Curated', icon: 'eye' },
       { value: 'Multi', label: 'Format Mix', icon: 'users' },

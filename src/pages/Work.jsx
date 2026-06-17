@@ -3,64 +3,42 @@ import Reveal from '../components/Reveal'
 import CountUp from '../components/CountUp'
 import CtaBand, { CtaButton, ArrowIcon } from '../components/CtaBand'
 import LogoWall from '../components/LogoWall'
+import campaignWork from '../data/campaignWork'
 import '../styles/pages/work.css'
 
-const cases = [
-  {
-    img: '/assets/img/cs-hero-led.jpg',
-    alt: 'Hero mobile LED vehicle',
-    tag: 'Mobile LED · Multi-city',
-    title: 'Hero — on the move, everywhere',
-    desc: 'High-impact LED vehicles moved with the city across 25+ key routes for 30 days, putting Hero in front of millions on the road.',
-    metrics: [
-      { n: '1.2M+', l: 'Impressions' },
-      { n: '3.8M+', l: 'Reached' },
-      { n: '25+', l: 'Routes' },
-    ],
-    delay: '',
-  },
-  {
-    img: '/assets/img/svc-led.jpg',
-    alt: 'Snitch LED vehicle',
-    tag: 'Mobile LED · 27 days',
-    title: "Snitch — fit isn't just what you wear",
-    desc: "An LED vehicle campaign across 28+ key routes carried Snitch's bold brand statement through the busiest parts of the city.",
-    metrics: [
-      { n: '1.3M+', l: 'Impressions' },
-      { n: '3.9M+', l: 'Reached' },
-      { n: '28+', l: 'Routes' },
-    ],
-    delay: 'd1',
-  },
-  {
-    img: '/assets/img/cs-king.jpg',
-    alt: 'King Ice Cream auto top branding',
-    tag: 'Auto top · 30 days',
-    title: 'King Ice Cream — scoop up attention',
-    desc: 'A high-visibility mobile activation turned every auto into a moving billboard, creating instant brand recall across 20+ coverage zones.',
-    metrics: [
-      { n: '1.1M+', l: 'Impressions' },
-      { n: '3.2M+', l: 'Reached' },
-      { n: '20+', l: 'Zones' },
-    ],
-    delay: 'd2',
-  },
-  {
-    img: '/assets/img/cs-inorbit.jpg',
-    alt: 'Inorbit Mall',
-    tag: 'Planning & curation',
-    title: 'Inorbit Mall — high-visibility retail',
-    desc: 'Outdoor media planning and inventory curation for a high-visibility retail promotion — strategic site selection and mapping ensured efficient, multi-format execution.',
-    metrics: [
-      { n: '120+', l: 'Sites curated' },
-      { n: 'Multi', l: 'Format' },
-      { n: 'High', l: 'Visibility' },
-    ],
-    delay: 'd3',
-  },
-]
+const normalizeMediaSrc = (src = '') => {
+  if (/^(https?:|data:|blob:)/i.test(src)) return src
+  if (src.startsWith('/public/')) return src.replace('/public', '')
+  if (src.startsWith('public/')) return `/${src.replace(/^public\//, '')}`
+  if (src.startsWith('/')) return src
+  return `/${src}`
+}
+
+const isVideoMedia = (src = '') => /\.(mp4|webm|ogg)$/i.test(src.split('?')[0])
+
+function CampaignMedia({ campaign }) {
+  const src = normalizeMediaSrc(campaign.image)
+
+  if (isVideoMedia(src)) {
+    return (
+      <video
+        src={src}
+        aria-label={campaign.alt}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
+    )
+  }
+
+  return <img src={src} alt={campaign.alt} loading="lazy" />
+}
 
 export default function Work() {
+  const [featuredCampaign, ...campaigns] = campaignWork
+
   useEffect(() => {
     document.title = 'Work — Conekt Ads'
   }, [])
@@ -110,22 +88,23 @@ export default function Work() {
         <div className="wrap">
           <Reveal as="article" className="csbig">
             <div className="csbig__media">
-              <img src="/assets/img/cs-wispr.jpg" alt="Wispr Flow branded auto in Bengaluru" />
+              <CampaignMedia campaign={featuredCampaign} />
             </div>
             <div className="csbig__body">
-              <span className="pill-tag">Featured · Auto + OOH</span>
+              <span className="pill-tag">Featured · {featuredCampaign.type} · {featuredCampaign.city}</span>
               <h2 className="h2" style={{ marginTop: '14px' }}>
-                Bengaluru traffic became the media.
+                {featuredCampaign.title}
               </h2>
               <p className="lead">
-                For Wispr Flow&apos;s India launch, Bengaluru&apos;s daily traffic became a city-wide media network. Through auto branding and billboards — amplified by founder-led social storytelling — the campaign delivered strong recall and turned city-wide awareness into real conversation.
+                {featuredCampaign.location}
               </p>
               <div className="csbig__metrics">
-                <div><div className="n">23.3M</div><div className="l">Views</div></div>
-                <div><div className="n">267.7K</div><div className="l">Likes</div></div>
-                <div><div className="n">2.9K</div><div className="l">Comments</div></div>
-                <div><div className="n">100+</div><div className="l">Autos branded</div></div>
-                <div><div className="n">15</div><div className="l">Billboards</div></div>
+                {featuredCampaign.metrics.map((metric) => (
+                  <div key={metric.label}>
+                    <div className="n">{metric.value}</div>
+                    <div className="l">{metric.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>
@@ -145,23 +124,14 @@ export default function Work() {
             </div>
           </div>
           <div className="casegrid">
-            {cases.map((c) => (
-              <Reveal key={c.title} as="article" className="casecard card" delay={c.delay}>
+            {campaigns.map((campaign, index) => (
+              <Reveal key={campaign.id} as="article" className="casecard card" delay={index % 3 === 1 ? 'd1' : index % 3 === 2 ? 'd2' : ''}>
                 <div className="casecard__media">
-                  <img src={c.img} alt={c.alt} />
+                  <CampaignMedia campaign={campaign} />
                 </div>
                 <div className="casecard__body">
-                  <span className="svc__tag">{c.tag}</span>
-                  <h3 className="h3">{c.title}</h3>
-                  <p>{c.desc}</p>
-                  <div className="casecard__metrics">
-                    {c.metrics.map((m) => (
-                      <div key={m.l}>
-                        <span className="n">{m.n}</span>
-                        <span className="l">{m.l}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <h3 className="h3">{campaign.title}</h3>
+                  <p>{campaign.location}</p>
                 </div>
               </Reveal>
             ))}
