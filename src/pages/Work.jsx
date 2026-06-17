@@ -75,8 +75,9 @@ export default function Work() {
             </div>
             <div>
               <div className="statnum">
-                <CountUp value={5} />
-                <span className="u"> formats</span>
+                <span>
+                  <CountUp value={5} /> <span className="u">Formats</span>
+                </span>
               </div>
               <div className="statlabel">Across the media mix</div>
             </div>

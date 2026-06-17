@@ -181,48 +181,6 @@ const campaignWork = [
       { value: '12', label: 'Core Routes', icon: 'trend' },
     ],
   },
-  {
-    id: 'billboard-network-arterial-roads',
-    image: '/assets/showcase/billboards.png',
-    alt: 'Billboard network campaign on arterial roads',
-    type: 'Billboard',
-    city: 'Bengaluru',
-    title: 'Billboard Network - Arterial Road Impact',
-    location: 'Outer Ring Road, Bengaluru',
-    metrics: [
-      { value: '3.2M+', label: 'Impressions', icon: 'eye' },
-      { value: '24%', label: 'Recall Lift', icon: 'users' },
-      { value: '18%', label: 'Traffic Lift', icon: 'trend' },
-    ],
-  },
-  {
-    id: 'billboard-network-tech-parks',
-    image: '/assets/showcase/billboards1.png',
-    alt: 'Billboard campaign near Bengaluru tech parks',
-    type: 'Billboard',
-    city: 'Bengaluru',
-    title: 'Billboard Network - Tech Park Reach',
-    location: 'Manyata Tech Park and Bellandur, Bengaluru',
-    metrics: [
-      { value: '2.4M+', label: 'Impressions', icon: 'eye' },
-      { value: '19%', label: 'Brand Recall', icon: 'users' },
-      { value: '14%', label: 'Lead Lift', icon: 'trend' },
-    ],
-  },
-  {
-    id: 'billboard-network-premium-corridor',
-    image: '/assets/showcase/billboards4.png',
-    alt: 'Premium corridor billboard campaign in Bengaluru',
-    type: 'Billboard',
-    city: 'Bengaluru',
-    title: 'Billboard Network - Premium Corridor',
-    location: 'Airport Road and Hebbal, Bengaluru',
-    metrics: [
-      { value: '2.8M+', label: 'Impressions', icon: 'eye' },
-      { value: '26%', label: 'Recall Lift', icon: 'users' },
-      { value: '17%', label: 'Consideration', icon: 'trend' },
-    ],
-  },
 ]
 
 export default campaignWork
