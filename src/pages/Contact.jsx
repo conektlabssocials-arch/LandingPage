@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Reveal from '../components/Reveal'
 import '../styles/pages/contact.css'
 
+const SHEETS_WEB_APP_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEB_APP_URL?.trim()
+
 const FORMATS = [
   'OOH Hoardings',
   'DOOH Screens',
@@ -15,6 +17,8 @@ const FORMATS = [
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [errors, setErrors] = useState({})
   const [form, setForm] = useState({
     name: '',
@@ -31,6 +35,7 @@ export default function Contact() {
 
   const updateField = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }))
+    setSubmitError('')
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: false }))
     }
@@ -45,15 +50,47 @@ export default function Contact() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validate()) return
-    setSubmitted(true)
+
+    if (!SHEETS_WEB_APP_URL) {
+      setSubmitError('The Google Sheet is not connected yet. Add VITE_GOOGLE_SHEETS_WEB_APP_URL in .env.local.')
+      return
+    }
+
+    setSubmitting(true)
+    setSubmitError('')
+
+    const payload = new URLSearchParams({
+      submittedAt: new Date().toISOString(),
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      company: form.company.trim(),
+      format: form.format,
+      message: form.message.trim(),
+      source: 'Conekt Ads contact page',
+    })
+
+    try {
+      await fetch(SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: payload,
+      })
+      setSubmitted(true)
+    } catch {
+      setSubmitError('Something went wrong while sending your enquiry. Please try again or email hello@conektads.com.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleReset = () => {
     setForm({ name: '', email: '', phone: '', company: '', format: '', message: '' })
     setErrors({})
+    setSubmitError('')
     setSubmitted(false)
   }
 
@@ -84,6 +121,17 @@ export default function Contact() {
               <span>
                 <span className="ccard__l">Email us</span>
                 <span className="ccard__v">hello@conektads.com</span>
+              </span>
+            </a>
+            <a className="ccard" href="tel:+919731865049">
+              <span className="ccard__ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+                </svg>
+              </span>
+              <span>
+                <span className="ccard__l">Call us</span>
+                <span className="ccard__v">+91 97318 65049</span>
               </span>
             </a>
             <a className="ccard" href="tel:+918861596468">
@@ -200,8 +248,18 @@ export default function Contact() {
                   onChange={(e) => updateField('message', e.target.value)}
                 />
               </div>
-              <button className="btn btn--primary btn--lg" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
-                Send enquiry{' '}
+              {submitError ? (
+                <p className="cform__error" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
+              <button
+                className="btn btn--primary btn--lg"
+                type="submit"
+                disabled={submitting}
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                {submitting ? 'Sending...' : 'Send enquiry'}{' '}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
