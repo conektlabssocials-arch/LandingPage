@@ -4,9 +4,6 @@
    Palette: ink black + brand green, warm off-white surfaces
    =========================================================== */
 
-/* ---- Fonts ---- */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 :root{
   /* brand */
   --green:        #1E8442;
@@ -88,10 +85,10 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-weight:var(--display-weight);
 .em-green{ color:var(--accent); }
 .kicker{
   font-family:var(--font-display); font-weight:700; font-size:.8rem;
-  letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--green-deep);
   display:inline-flex; align-items:center; gap:.7em;
 }
-.kicker::before{ content:""; width:30px; height:2px; background:var(--accent); display:inline-block; }
+.kicker::before{ content:""; width:30px; height:2px; background:var(--green-deep); display:inline-block; }
 .kicker.no-rule::before{ display:none; }
 
 /* ---- layout helpers ---- */
@@ -233,7 +230,7 @@ body.menu-open{ overflow:hidden; }
 /* ---- footer ---- */
 footer{ background:var(--ink); color:rgba(255,255,255,.72); }
 footer .ftop{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:40px; padding-block:clamp(54px,7vw,86px); }
-footer h4{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.55); font-weight:700; margin-bottom:18px; }
+footer .footer__heading{ font-family:var(--font-display); font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.72); font-weight:700; margin:0 0 18px; }
 footer a{ color:rgba(255,255,255,.72); display:block; padding:6px 0; font-weight:500; transition:color .18s ease; }
 footer a:hover{ color:var(--accent-bright); }
 footer .fcontact a{ display:flex; gap:.6em; align-items:flex-start; }

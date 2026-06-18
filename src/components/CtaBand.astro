@@ -1,11 +1,12 @@
 ---
 import Reveal from './Reveal.astro'
+import Image from './Image.astro'
 
 const { bg, title, lead } = Astro.props
 ---
 
 <section class="ctaband">
-  <img class="ctaband__bg" src={bg} alt="" />
+  <Image class="ctaband__bg" src={bg} alt="" />
   <div class="ctaband__scrim"></div>
   <div class="wrap ctaband__inner">
     <Reveal>

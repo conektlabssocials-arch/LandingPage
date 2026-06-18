@@ -72,6 +72,9 @@ const jsonLd = [
     <link rel="icon" type="image/webp" href="/favicon.webp?v=3" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE_NAME} />
@@ -95,7 +98,9 @@ const jsonLd = [
   </head>
   <body data-screen-label={screenLabel}>
     <Nav currentPath={path} />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <Footer />
     <script is:inline>
       const formatNumber = (value, decimals) => {
@@ -307,10 +312,42 @@ const jsonLd = [
         })
       }
 
+      const initLazyVideos = () => {
+        const videos = [...document.querySelectorAll('[data-lazy-video]')]
+        if (!videos.length) return
+
+        const loadVideo = (video) => {
+          if (video.src || !video.dataset.videoSrc) return
+          video.src = video.dataset.videoSrc
+          video.load()
+          video.play?.().catch(() => {})
+        }
+
+        if (!('IntersectionObserver' in window)) {
+          videos.forEach(loadVideo)
+          return
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                loadVideo(entry.target)
+                observer.unobserve(entry.target)
+              }
+            })
+          },
+          { rootMargin: '420px 0px', threshold: 0.01 }
+        )
+
+        videos.forEach((video) => observer.observe(video))
+      }
+
       initNav()
       initReveal()
       initCountUp()
       initContactForm()
+      initLazyVideos()
     </script>
   </body>
 </html>

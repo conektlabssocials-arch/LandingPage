@@ -26,7 +26,7 @@
 .casecard__body h3{ color:#fff; font-size:clamp(1.18rem,2vw,1.65rem); max-width:24ch; text-shadow:0 2px 14px rgba(0,0,0,.38); }
 .casecard__body p{ margin:10px 0 0; color:rgba(255,255,255,.82); max-width:42ch; text-shadow:0 2px 12px rgba(0,0,0,.34); }
 
-.brands__title{ text-align:center; font-family:var(--font-display); font-weight:600; color:var(--faint); letter-spacing:.04em; margin:0 0 28px; }
+.brands__title{ text-align:center; font-family:var(--font-display); font-weight:600; color:var(--muted); letter-spacing:.04em; margin:0 0 28px; }
 
 @media (max-width: 860px){
   .csbig{ grid-template-columns:1fr; height:auto; max-width:680px; } .csbig__media{ min-height:220px; aspect-ratio:16/10; }

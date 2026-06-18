@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import Reveal from '../components/Reveal.astro'
 import CountUp from '../components/CountUp.astro'
 import CtaBand from '../components/CtaBand.astro'
+import Image from '../components/Image.astro'
 import LogoWall from '../components/LogoWall.astro'
 import ProofShowcase from '../components/ProofShowcase.astro'
 import { pages } from '../data/site'
@@ -81,7 +82,12 @@ const schema = [
       </div>
       <Reveal class="hero__media" delay="d2">
         <div class="hero__imgwrap">
-          <img src="/assets/img/hero-street.webp" alt="Conekt Ads billboard, mobile LED truck and branded auto on a city road" />
+          <Image
+            src="/assets/img/hero-street.webp"
+            alt="Conekt Ads billboard, mobile LED truck and branded auto on a city road"
+            loading="eager"
+            fetchpriority="high"
+          />
         </div>
         <div class="hero__badge">
           <CountUp value={50} class="statnum" />
@@ -122,7 +128,7 @@ const schema = [
       <div class="svc-grid">
         {services.map((svc) => (
           <Reveal as="article" class="svc card" delay={svc.delay}>
-            <div class="svc__img"><img src={svc.img} alt={svc.alt} /></div>
+            <div class="svc__img"><Image src={svc.img} alt={svc.alt} /></div>
             <div class="svc__body">
               <span class="svc__tag">{svc.tag}</span>
               <h3>{svc.title}</h3>
@@ -182,7 +188,7 @@ const schema = [
       </div>
       <div class="cslist">
         <Reveal as="article" class="cs">
-          <div class="cs__media"><img src="/assets/img/cs-wispr.webp" alt="Wispr Flow branded auto in Bengaluru" /></div>
+          <div class="cs__media"><Image src="/assets/img/cs-wispr.webp" alt="Wispr Flow branded auto in Bengaluru" /></div>
           <div class="cs__body">
             <span class="pill-tag">Auto + OOH · Bengaluru</span>
             <h3 class="h3">Bengaluru traffic became the media for Wispr Flow&apos;s India launch.</h3>
@@ -195,7 +201,7 @@ const schema = [
           </div>
         </Reveal>
         <Reveal as="article" class="cs">
-          <div class="cs__media"><img src="/assets/img/cs-hero-led.webp" alt="Hero mobile LED vehicle campaign" /></div>
+          <div class="cs__media"><Image src="/assets/img/cs-hero-led.webp" alt="Hero mobile LED vehicle campaign" /></div>
           <div class="cs__body">
             <span class="pill-tag">Mobile LED · Multi-city</span>
             <h3 class="h3">Taking Hero where it matters — across 25+ key routes.</h3>

@@ -1,0 +1,28 @@
+---
+import { getImageSize, normalizeImageSrc } from '../data/imageSizes'
+
+const {
+  src,
+  alt = '',
+  loading = 'lazy',
+  decoding = 'async',
+  fetchpriority,
+  class: className,
+  ...attrs
+} = Astro.props
+
+const normalizedSrc = normalizeImageSrc(src)
+const size = getImageSize(normalizedSrc)
+---
+
+<img
+  src={normalizedSrc}
+  alt={alt}
+  class={className}
+  width={size?.width}
+  height={size?.height}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  {...attrs}
+/>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Reveal from '../components/Reveal.astro'
 import CtaBand from '../components/CtaBand.astro'
+import Image from '../components/Image.astro'
 import { pages } from '../data/site'
 import { formats, incabItems, addons } from '../data/services'
 import '../styles/pages/services.css'
@@ -47,7 +48,7 @@ const schema = [
       {formats.map((fmt) => (
         <Reveal as="article" class="fmt" id={fmt.id}>
           <div class="fmt__media">
-            <img src={fmt.img} alt={fmt.alt} />
+            <Image src={fmt.img} alt={fmt.alt} />
           </div>
           <div class="fmt__body">
             <span class="fmt__no">{fmt.no}</span>
