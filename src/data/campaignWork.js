@@ -1,7 +1,7 @@
 const campaignWork = [
   {
     id: 'wispr-launch-auto-wraps',
-    image: 'assets/showcase/wispr3.webp',
+    image: 'assets/showcase/wispr3.JPG',
     alt: 'Wispr Flow auto wrap campaign in Bengaluru',
     type: 'Auto Ads',
     city: 'Bengaluru',
