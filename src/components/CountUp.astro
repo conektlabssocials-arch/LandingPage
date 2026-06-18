@@ -1,0 +1,9 @@
+---
+const { value, decimals = 0, class: className = '' } = Astro.props
+const display = Number(value).toLocaleString('en-IN', {
+  maximumFractionDigits: decimals,
+  minimumFractionDigits: decimals,
+})
+---
+
+<span class={className} data-count={value} data-decimals={decimals}>{display}</span>

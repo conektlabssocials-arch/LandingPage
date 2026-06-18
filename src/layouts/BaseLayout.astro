@@ -1,0 +1,316 @@
+---
+import Nav from '../components/Nav.astro'
+import Footer from '../components/Footer.astro'
+import { SITE_NAME, SITE_URL, DEFAULT_IMAGE, absoluteUrl, contact } from '../data/site'
+import '../styles/conekt.css'
+
+const {
+  title,
+  description,
+  path = '/',
+  image = DEFAULT_IMAGE,
+  schema = [],
+  screenLabel = SITE_NAME,
+} = Astro.props
+
+const canonical = absoluteUrl(path)
+const ogImage = absoluteUrl(image)
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/favicon.webp`,
+    email: contact.email,
+    telephone: contact.phone,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bengaluru',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN',
+    },
+    sameAs: [contact.whatsapp],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#localbusiness`,
+    name: SITE_NAME,
+    image: ogImage,
+    url: SITE_URL,
+    email: contact.email,
+    telephone: contact.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'JP Nagar',
+      addressLocality: 'Bengaluru',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN',
+    },
+    areaServed: ['India', 'South India', 'Bengaluru', 'Mumbai', 'Delhi', 'Gurgaon', 'Jaipur'],
+    priceRange: '$$',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  },
+  ...schema,
+]
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="punch">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/webp" href="/favicon.webp?v=3" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1E8442" />
+    <meta name="application-name" content={SITE_NAME} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  </head>
+  <body data-screen-label={screenLabel}>
+    <Nav currentPath={path} />
+    <slot />
+    <Footer />
+    <script is:inline>
+      const formatNumber = (value, decimals) => {
+        const options = {
+          maximumFractionDigits: decimals,
+          minimumFractionDigits: decimals,
+        }
+        return Number(value).toLocaleString('en-IN', options)
+      }
+
+      const initNav = () => {
+        const header = document.querySelector('[data-nav]')
+        const toggle = document.querySelector('[data-menu-toggle]')
+        const mobileNav = document.querySelector('[data-mobile-nav]')
+
+        const syncHeader = () => {
+          header?.classList.toggle('scrolled', window.scrollY > 8)
+        }
+
+        const closeMenu = () => {
+          mobileNav?.classList.remove('open')
+          document.body.classList.remove('menu-open')
+          toggle?.setAttribute('aria-expanded', 'false')
+        }
+
+        syncHeader()
+        window.addEventListener('scroll', syncHeader, { passive: true })
+
+        toggle?.addEventListener('click', () => {
+          const open = !mobileNav?.classList.contains('open')
+          mobileNav?.classList.toggle('open', open)
+          document.body.classList.toggle('menu-open', open)
+          toggle.setAttribute('aria-expanded', String(open))
+        })
+
+        mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu))
+      }
+
+      const initReveal = () => {
+        const elements = [...document.querySelectorAll('.reveal')]
+        if (!elements.length) return
+
+        const reveal = (el) => el.classList.add('in')
+
+        if (!('IntersectionObserver' in window)) {
+          elements.forEach(reveal)
+          return
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                reveal(entry.target)
+                observer.unobserve(entry.target)
+              }
+            })
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -6% 0px' }
+        )
+
+        elements.forEach((el) => observer.observe(el))
+        window.setTimeout(() => elements.forEach(reveal), 2000)
+      }
+
+      const initCountUp = () => {
+        const elements = [...document.querySelectorAll('[data-count]')]
+        if (!elements.length) return
+
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const finish = (el) => {
+          el.textContent = formatNumber(el.dataset.count, Number(el.dataset.decimals || 0))
+        }
+
+        if (reduced || !('IntersectionObserver' in window)) {
+          elements.forEach(finish)
+          return
+        }
+
+        const animate = (el) => {
+          const target = Number(el.dataset.count)
+          const decimals = Number(el.dataset.decimals || 0)
+          const duration = 1400
+          let start = null
+
+          const step = (time) => {
+            start ??= time
+            const progress = Math.min((time - start) / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            el.textContent = formatNumber(target * eased, decimals)
+
+            if (progress < 1) {
+              requestAnimationFrame(step)
+            } else {
+              finish(el)
+            }
+          }
+
+          el.textContent = formatNumber(0, decimals)
+          requestAnimationFrame(step)
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                animate(entry.target)
+                observer.unobserve(entry.target)
+              }
+            })
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
+        )
+
+        elements.forEach((el) => observer.observe(el))
+      }
+
+      const initContactForm = () => {
+        const form = document.querySelector('[data-contact-form]')
+        if (!form) return
+
+        const endpoint = form.dataset.endpoint?.trim()
+        const errorBox = document.querySelector('[data-contact-error]')
+        const formWrap = document.querySelector('[data-contact-form-wrap]')
+        const success = document.querySelector('[data-contact-success]')
+        const reset = document.querySelector('[data-contact-reset]')
+        const submit = form.querySelector('button[type="submit"]')
+        const submitText = submit?.querySelector('[data-submit-text]')
+
+        const setError = (message) => {
+          if (!errorBox) return
+          errorBox.textContent = message
+          errorBox.hidden = !message
+        }
+
+        const clearInvalid = (input) => input.classList.remove('invalid')
+        form.querySelectorAll('input, textarea, select').forEach((input) => {
+          input.addEventListener('input', () => {
+            clearInvalid(input)
+            setError('')
+          })
+        })
+
+        reset?.addEventListener('click', () => {
+          form.reset()
+          formWrap.hidden = false
+          success.hidden = true
+          setError('')
+          form.querySelectorAll('.invalid').forEach(clearInvalid)
+        })
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault()
+          setError('')
+          form.querySelectorAll('.invalid').forEach(clearInvalid)
+
+          const required = ['name', 'email', 'message']
+          let valid = true
+
+          required.forEach((name) => {
+            const input = form.elements[name]
+            const value = input?.value?.trim()
+            const badEmail = name === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)
+
+            if (!value || badEmail) {
+              input?.classList.add('invalid')
+              valid = false
+            }
+          })
+
+          if (!valid) {
+            setError('Please add your name, a valid email and campaign details.')
+            return
+          }
+
+          if (!endpoint) {
+            setError('The Google Sheet is not connected yet. Add VITE_GOOGLE_SHEETS_WEB_APP_URL in .env.local.')
+            return
+          }
+
+          submit.disabled = true
+          if (submitText) submitText.textContent = 'Sending...'
+
+          const payload = new URLSearchParams({
+            submittedAt: new Date().toISOString(),
+            name: form.elements.name.value.trim(),
+            email: form.elements.email.value.trim(),
+            phone: form.elements.phone.value.trim(),
+            company: form.elements.company.value.trim(),
+            format: form.elements.format.value,
+            message: form.elements.message.value.trim(),
+            source: 'Conekt Ads contact page',
+          })
+
+          try {
+            await fetch(endpoint, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: payload,
+            })
+            formWrap.hidden = true
+            success.hidden = false
+          } catch {
+            setError('Something went wrong while sending your enquiry. Please try again or email hello@conektads.com.')
+          } finally {
+            submit.disabled = false
+            if (submitText) submitText.textContent = 'Send enquiry'
+          }
+        })
+      }
+
+      initNav()
+      initReveal()
+      initCountUp()
+      initContactForm()
+    </script>
+  </body>
+</html>

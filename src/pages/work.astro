@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Reveal from '../components/Reveal.astro'
+import CountUp from '../components/CountUp.astro'
+import CtaBand from '../components/CtaBand.astro'
+import LogoWall from '../components/LogoWall.astro'
+import CampaignMedia from '../components/CampaignMedia.astro'
+import { pages } from '../data/site'
+import campaignWork from '../data/campaignWork'
+import '../styles/pages/work.css'
+
+const seo = pages['/work']
+const [featuredCampaign, ...campaigns] = campaignWork
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://conektads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Work', item: 'https://conektads.com/work' },
+    ],
+  },
+]
+---
+
+<BaseLayout title={seo.title} description={seo.description} path="/work" image={seo.image} schema={schema} screenLabel="Work">
+  <section class="pagehero">
+    <div class="wrap">
+      <Reveal as="span" class="kicker">Case studies</Reveal>
+      <Reveal as="h1" class="display" delay="d1" style="max-width:15ch">
+        Real campaigns.<br />
+        <span class="em-green">Real results.</span>
+      </Reveal>
+      <Reveal as="p" class="lead" delay="d2" style="max-width:52ch">
+        Campaigns that turned city-wide visibility into measurable impact — from product launches to always-on brand presence.
+      </Reveal>
+      <div class="worktotals reveal in">
+        <div>
+          <div class="statnum"><CountUp value={27} /><span class="u">M+</span></div>
+          <div class="statlabel">Combined impressions</div>
+        </div>
+        <div>
+          <div class="statnum"><CountUp value={11} /><span class="u">M+</span></div>
+          <div class="statlabel">People reached</div>
+        </div>
+        <div>
+          <div class="statnum"><span><CountUp value={5} /> <span class="u">Formats</span></span></div>
+          <div class="statlabel">Across the media mix</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="wrap">
+      <Reveal as="article" class="csbig">
+        <div class="csbig__media">
+          <CampaignMedia campaign={featuredCampaign} />
+        </div>
+        <div class="csbig__body">
+          <span class="pill-tag">Featured · {featuredCampaign.type} · {featuredCampaign.city}</span>
+          <h2 class="h2" style="margin-top:14px">{featuredCampaign.title}</h2>
+          <p class="lead">{featuredCampaign.location}</p>
+          <div class="csbig__metrics">
+            {featuredCampaign.metrics.map((metric) => (
+              <div>
+                <div class="n">{metric.value}</div>
+                <div class="l">{metric.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight canvas">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">More campaigns</Reveal>
+          <Reveal as="h2" class="h2" delay="d1" style="margin-top:.3em">
+            Proof across every format
+          </Reveal>
+        </div>
+      </div>
+      <div class="casegrid">
+        {campaigns.map((campaign, index) => (
+          <Reveal as="article" class="casecard card" delay={index % 3 === 1 ? 'd1' : index % 3 === 2 ? 'd2' : ''}>
+            <div class="casecard__media">
+              <CampaignMedia campaign={campaign} />
+            </div>
+            <div class="casecard__body">
+              <h3 class="h3">{campaign.title}</h3>
+              <p>{campaign.location}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LogoWall title="Brands we've worked with" />
+
+  <CtaBand bg="/assets/img/night-billboard.webp" title="Your campaign could be next." lead="Let's turn your next launch into a city-wide moment people can't miss.">
+    <a class="btn btn--on-dark btn--lg" href="/contact">
+      Start a campaign
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+  </CtaBand>
+</BaseLayout>

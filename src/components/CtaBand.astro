@@ -1,0 +1,19 @@
+---
+import Reveal from './Reveal.astro'
+
+const { bg, title, lead } = Astro.props
+---
+
+<section class="ctaband">
+  <img class="ctaband__bg" src={bg} alt="" />
+  <div class="ctaband__scrim"></div>
+  <div class="wrap ctaband__inner">
+    <Reveal>
+      <h2 class="display" style="color:#fff;max-width:15ch">{title}</h2>
+      {lead && <p class="lead" style="color:rgba(255,255,255,.85);max-width:50ch">{lead}</p>}
+      <div class="hero__actions">
+        <slot />
+      </div>
+    </Reveal>
+  </div>
+</section>

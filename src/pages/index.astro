@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Reveal from '../components/Reveal.astro'
+import CountUp from '../components/CountUp.astro'
+import CtaBand from '../components/CtaBand.astro'
+import LogoWall from '../components/LogoWall.astro'
+import ProofShowcase from '../components/ProofShowcase.astro'
+import { pages } from '../data/site'
+import { formats } from '../data/services'
+import '../styles/pages/home.css'
+
+const seo = pages['/']
+const services = formats.slice(0, 6).map((format) => ({
+  img: format.img,
+  alt: format.alt,
+  tag: format.tag,
+  title: format.id === 'ooh' ? 'High-impact hoardings' : format.id === 'dooh' ? 'Dynamic digital screens' : format.id === 'auto' ? 'Hyper-local auto reach' : format.id === 'bus' ? 'Billboards that travel' : format.id === 'led' ? 'LED that moves with the city' : 'Cabs that carry your brand',
+  desc: format.id === 'ooh' ? 'Static & illuminated hoardings at premium, high-footfall locations across cities.' : format.id === 'dooh' ? 'Real-time digital displays that deliver impact in high-footfall, high-dwell zones.' : format.id === 'auto' ? 'Visibility that reaches every lane, every signal and every neighbourhood.' : format.id === 'bus' ? "Moving media across the city's busiest routes for maximum daily exposure." : format.id === 'led' ? 'High-impact LED vehicles that capture attention everywhere they go.' : 'Exterior wraps and in-cab placements that reach every rider, every trip, across fleets.',
+  link: format.id === 'car' ? '/services#car' : '/services',
+  delay: ['dooh', 'auto', 'led', 'car'].includes(format.id) ? (['dooh', 'led'].includes(format.id) ? 'd1' : 'd2') : '',
+}))
+
+const stats = [
+  { value: 3, suffix: 'L+', label: 'Billboards ', delay: '' },
+  { value: 50, suffix: 'K+', label: 'Premium sites', delay: '' },
+  { value: 150, suffix: '+', label: 'Cities covered', delay: 'd1' },
+  { value: 95, suffix: '%', label: 'Visibility rate', delay: 'd2' },
+  { value: 100, suffix: '+', label: 'Campaigns executed', delay: 'd3' },
+]
+
+const whyCards = [
+  { n: '01', title: 'Verified inventory', desc: 'Every site checked and quality-assured before your brand goes up.', delay: '' },
+  { n: '02', title: 'Fast turnaround', desc: 'From brief to on-ground in days, not weeks — across formats.', delay: 'd1' },
+  { n: '03', title: 'Full transparency', desc: 'Live updates and proof of execution at every step of the campaign.', delay: 'd2' },
+  { n: '04', title: 'Optimised budgets', desc: 'Strategic site selection that maximises reach for every rupee spent.', delay: 'd3' },
+]
+
+const process = [
+  { n: '01', title: 'Understand your goal', desc: 'We dive deep into your objectives, audience and campaign needs.', delay: '' },
+  { n: '02', title: 'Plan & curate', desc: 'Experts select the right formats, locations and strategy.', delay: 'd1' },
+  { n: '03', title: 'Execute flawlessly', desc: 'We handle everything from booking to on-ground implementation.', delay: 'd2' },
+  { n: '04', title: 'Monitor in real-time', desc: 'Track performance with live updates and proof of delivery.', delay: 'd3' },
+  { n: '05', title: 'Report & optimise', desc: 'Clear reporting and optimisation for better impact and ROI.', delay: 'd4' },
+]
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://conektads.com' },
+    ],
+  },
+]
+---
+
+<BaseLayout title={seo.title} description={seo.description} path="/" image={seo.image} schema={schema} screenLabel="Home">
+  <section class="hero">
+    <div class="hero__inner wrap">
+      <div class="hero__copy">
+        <Reveal as="span" class="kicker">India&apos;s tech-enabled outdoor advertising partner</Reveal>
+        <Reveal as="h1" class="display" delay="d1">
+          Making Brands<br />
+          <span class="em-green">Unmissable.</span>
+        </Reveal>
+        <Reveal as="p" class="lead" delay="d2">
+          Strategic outdoor media across India&apos;s most impactful formats — planned, executed and measured by a team that turns visibility into real business.
+        </Reveal>
+        <Reveal class="hero__actions" delay="d3">
+          <a class="btn btn--primary btn--lg" href="/contact">
+            Start a campaign
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="/work">See our work</a>
+        </Reveal>
+        <Reveal class="chips" delay="d4" aria-label="Formats">
+          {['OOH', 'DOOH', 'Auto', 'Cabs', 'Bus', 'Mobile LED', 'Print'].map((chip) => (
+            <span class="chip">{chip}</span>
+          ))}
+        </Reveal>
+      </div>
+      <Reveal class="hero__media" delay="d2">
+        <div class="hero__imgwrap">
+          <img src="/assets/img/hero-street.webp" alt="Conekt Ads billboard, mobile LED truck and branded auto on a city road" />
+        </div>
+        <div class="hero__badge">
+          <CountUp value={50} class="statnum" />
+          <span class="statnum">K+</span>
+          <span class="statlabel">premium sites<br />pan-India</span>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight canvas">
+    <div class="wrap statstrip">
+      {stats.map((stat) => (
+        <Reveal class="stat" delay={stat.delay}>
+          <div class="statnum">
+            <CountUp value={stat.value} />
+            <span class="u">{stat.suffix}</span>
+          </div>
+          <div class="statlabel">{stat.label}</div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Our core services</Reveal>
+          <Reveal as="h2" class="h1" delay="d1" style="margin-top:.3em;max-width:16ch">
+            One agency.<br />Every format.
+          </Reveal>
+        </div>
+        <Reveal as="p" delay="d2">
+          Strategic outdoor media solutions that put your brand where it matters most — from premium hoardings to streets that move.
+        </Reveal>
+      </div>
+      <div class="svc-grid">
+        {services.map((svc) => (
+          <Reveal as="article" class="svc card" delay={svc.delay}>
+            <div class="svc__img"><img src={svc.img} alt={svc.alt} /></div>
+            <div class="svc__body">
+              <span class="svc__tag">{svc.tag}</span>
+              <h3>{svc.title}</h3>
+              <p>{svc.desc}</p>
+              <div class="svc__foot">
+                <a class="arrowlink" href={svc.link}>
+                  Explore
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section ink-bg" id="why">
+    <div class="wrap why">
+      <Reveal class="why__head">
+        <span class="kicker no-rule" style="color:var(--accent-bright)">The Conekt difference</span>
+        <h2 class="h1" style="max-width:18ch;margin-top:.3em">
+          Outdoor advertising is everywhere.<br />
+          <span style="color:var(--accent-bright)">Execution is not.</span>
+        </h2>
+        <p class="lead" style="color:rgba(255,255,255,.72);max-width:52ch">
+          Brands lose budget to fragmented inventory, unverified sites and zero transparency. Our tech-enabled process fixes exactly that.
+        </p>
+      </Reveal>
+      <div class="why__grid">
+        {whyCards.map((card) => (
+          <Reveal class="why__card" delay={card.delay}>
+            <div class="why__n">{card.n}</div>
+            <h3>{card.title}</h3>
+            <p>{card.desc}</p>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LogoWall />
+  <ProofShowcase />
+
+  <section class="section canvas" id="work">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Case studies</Reveal>
+          <Reveal as="h2" class="h1" delay="d1" style="margin-top:.3em;max-width:14ch">
+            Real campaigns.<br />Real results.
+          </Reveal>
+        </div>
+        <Reveal as="p" delay="d2">
+          A few of the campaigns where we turned city-wide visibility into measurable impact.
+        </Reveal>
+      </div>
+      <div class="cslist">
+        <Reveal as="article" class="cs">
+          <div class="cs__media"><img src="/assets/img/cs-wispr.webp" alt="Wispr Flow branded auto in Bengaluru" /></div>
+          <div class="cs__body">
+            <span class="pill-tag">Auto + OOH · Bengaluru</span>
+            <h3 class="h3">Bengaluru traffic became the media for Wispr Flow&apos;s India launch.</h3>
+            <p style="color:var(--muted);margin:0">Auto branding and billboards turned the city&apos;s daily commute into a city-wide launch network — amplified through social into real conversation.</p>
+            <div class="cs__metrics">
+              <div class="cs__metric"><div class="n">23.3M</div><div class="l">Views</div></div>
+              <div class="cs__metric"><div class="n">267.7K</div><div class="l">Likes</div></div>
+              <div class="cs__metric"><div class="n">100+</div><div class="l">Autos branded</div></div>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal as="article" class="cs">
+          <div class="cs__media"><img src="/assets/img/cs-hero-led.webp" alt="Hero mobile LED vehicle campaign" /></div>
+          <div class="cs__body">
+            <span class="pill-tag">Mobile LED · Multi-city</span>
+            <h3 class="h3">Taking Hero where it matters — across 25+ key routes.</h3>
+            <p style="color:var(--muted);margin:0">High-impact LED vehicles moved with the city for 30 days, putting the brand in front of millions on the road.</p>
+            <div class="cs__metrics">
+              <div class="cs__metric"><div class="n">1.2M+</div><div class="l">Impressions</div></div>
+              <div class="cs__metric"><div class="n">3.8M+</div><div class="l">People reached</div></div>
+              <div class="cs__metric"><div class="n">25+</div><div class="l">Key routes</div></div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+      <div style="text-align:center;margin-top:44px">
+        <Reveal>
+          <a class="btn btn--dark btn--lg" href="/work">
+            View all case studies
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Our process</Reveal>
+          <Reveal as="h2" class="h1" delay="d1" style="margin-top:.3em;max-width:16ch">
+            A seamless journey from brief to impact.
+          </Reveal>
+        </div>
+        <Reveal as="p" delay="d2">Tech-enabled at every step — built for speed, transparency and precision.</Reveal>
+      </div>
+      <div class="process">
+        {process.map((step) => (
+          <Reveal class="process__step" delay={step.delay}>
+            <div class="process__n">{step.n}</div>
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand bg="/assets/img/cta-street.webp" title="Let&apos;s build visibility that moves business." lead="From streets to skylines, we help brands show up where attention matters most. Ready to launch your next campaign?">
+    <a class="btn btn--on-dark btn--lg" href="/contact">
+      Let&apos;s talk
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+    <a href="tel:+918861596468" class="btn btn--lg" style="color:#fff;border:1.5px solid rgba(255,255,255,.5)">+91 88615 96468</a>
+  </CtaBand>
+</BaseLayout>

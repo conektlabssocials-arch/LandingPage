@@ -1,0 +1,28 @@
+---
+const { campaign } = Astro.props
+
+const normalizeMediaSrc = (src = '') => {
+  if (/^(https?:|data:|blob:)/i.test(src)) return src
+  if (src.startsWith('/public/')) return src.replace('/public', '')
+  if (src.startsWith('public/')) return `/${src.replace(/^public\//, '')}`
+  if (src.startsWith('/')) return src
+  return `/${src}`
+}
+
+const src = normalizeMediaSrc(campaign.image)
+const isVideo = /\.(mp4|webm|ogg)$/i.test(src.split('?')[0])
+---
+
+{isVideo ? (
+  <video
+    src={src}
+    aria-label={campaign.alt}
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"
+  ></video>
+) : (
+  <img src={src} alt={campaign.alt} loading="lazy" />
+)}

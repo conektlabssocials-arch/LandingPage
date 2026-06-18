@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Reveal from '../components/Reveal.astro'
+import CountUp from '../components/CountUp.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { pages } from '../data/site'
+import '../styles/pages/coverage.css'
+
+const seo = pages['/coverage']
+const stats = [
+  { value: 50, suffix: 'K+', label: 'Premium sites', delay: '' },
+  { value: 150, suffix: '+', label: 'Cities covered', delay: 'd1' },
+  { value: 95, suffix: '%', label: 'Visibility rate', delay: 'd2' },
+  { value: 6, suffix: '+', label: 'Media formats', delay: 'd3' },
+]
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://conektads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Coverage', item: 'https://conektads.com/coverage' },
+    ],
+  },
+]
+---
+
+<BaseLayout title={seo.title} description={seo.description} path="/coverage" image={seo.image} schema={schema} screenLabel="Coverage">
+  <section class="pagehero">
+    <div class="wrap covhero">
+      <div class="covhero__copy">
+        <Reveal as="span" class="kicker">Where we&apos;re live</Reveal>
+        <Reveal as="h1" class="display" delay="d1" style="max-width:16ch">
+          Live across the<br />
+          South, <span class="em-green">and growing fast.</span>
+        </Reveal>
+        <Reveal as="p" class="lead" delay="d2" style="max-width:50ch">
+          Full active coverage across South India, plus Mumbai, Delhi, Gurgaon and Jaipur — with verified inventory and on-ground teams in every market we operate.
+        </Reveal>
+        <Reveal class="hero__actions" delay="d3">
+          <a class="btn btn--primary btn--lg" href="/contact">
+            Request inventory list
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+        </Reveal>
+      </div>
+      <Reveal class="covhero__media" delay="d2">
+        <img src="/assets/img/metro-city.webp" alt="Conekt Ads branding along a city metro line" />
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight canvas">
+    <div class="wrap covstats">
+      {stats.map((stat) => (
+        <Reveal class="covstat" delay={stat.delay}>
+          <div class="statnum">
+            <CountUp value={stat.value} />
+            <span class="u">{stat.suffix}</span>
+          </div>
+          <div class="statlabel">{stat.label}</div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Where we operate</Reveal>
+          <Reveal as="h2" class="h1" delay="d1" style="margin-top:.3em;max-width:16ch">
+            Strong across the South. Live in key metros.
+          </Reveal>
+        </div>
+        <Reveal as="p" delay="d2">
+          Headquartered in Bengaluru with on-ground teams across South India, and active operations in Mumbai, Delhi, Gurgaon and Jaipur.
+        </Reveal>
+      </div>
+      <div class="regions">
+        <Reveal class="region region--hl">
+          <span class="pill-tag">Live now · Home turf</span>
+          <h3 class="h3">All of South India</h3>
+          <p>Full active coverage across the South — billboards, autos, cabs, buses, mobile LED and DOOH in every major city and corridor.</p>
+          <div class="region__zones">Bengaluru · Chennai · Hyderabad · Coimbatore · Kochi · Mysuru · Madurai · Vizag &amp; more</div>
+        </Reveal>
+        <Reveal class="region" delay="d1"><span class="region__live">Live</span><h3 class="h3">Mumbai</h3><p>Across the city&apos;s busiest commercial and transit corridors.</p></Reveal>
+        <Reveal class="region" delay="d2"><span class="region__live">Live</span><h3 class="h3">Delhi &amp; Gurgaon</h3><p>Prime hoardings, cabs and mobile media across the NCR.</p></Reveal>
+        <Reveal class="region" delay="d3"><span class="region__live">Live</span><h3 class="h3">Jaipur</h3><p>High-visibility outdoor and on-vehicle branding city-wide.</p></Reveal>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight ink-bg">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <span class="kicker no-rule" style="color:var(--accent-bright)">The network</span>
+          <h2 class="h1" style="color:#fff;margin-top:.3em;max-width:16ch">Every format, mapped and verified.</h2>
+        </div>
+        <p class="lead" style="color:rgba(255,255,255,.72);max-width:42ch">
+          One curated inventory you can plan, book and measure across the whole country.
+        </p>
+      </div>
+      <div class="invgrid">
+        {[
+          { n: '50K+', l: 'OOH & DOOH sites', delay: '' },
+          { n: 'Fleets', l: 'Autos, cabs, cars & buses', delay: 'd1' },
+          { n: 'Mobile', l: 'LED vehicles on demand', delay: 'd2' },
+          { n: 'Print', l: 'Leading newspaper jackets', delay: 'd3' },
+        ].map((item) => (
+          <Reveal class="inv" delay={item.delay}>
+            <div class="inv__n">{item.n}</div>
+            <div class="inv__l">{item.l}</div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand bg="/assets/img/cta-street.webp" title="Tell us where you want to be seen." lead="Share your target cities and we'll send a curated inventory plan that fits your goals and budget.">
+    <a class="btn btn--on-dark btn--lg" href="/contact">
+      Get a coverage plan
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+  </CtaBand>
+</BaseLayout>

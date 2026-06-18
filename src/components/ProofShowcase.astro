@@ -1,0 +1,71 @@
+---
+import Reveal from './Reveal.astro'
+import CampaignMedia from './CampaignMedia.astro'
+import campaignWork from '../data/campaignWork'
+
+const cardSizes = ['wide', 'portrait', 'wide', 'standard', 'compact', 'wide', 'compact', 'standard']
+const rows = ['top', 'bottom'].map((id, rowIndex) => ({
+  id,
+  cards: campaignWork
+    .filter((_, campaignIndex) => campaignIndex % 2 === rowIndex)
+    .map((campaign, campaignIndex) => ({
+      campaign,
+      size: cardSizes[(campaignIndex + rowIndex + 1) % cardSizes.length],
+    })),
+}))
+---
+
+<section class="section proofshowcase" id="proof">
+  <div class="wrap">
+    <div class="eyebrow-row proofshowcase__head">
+      <div>
+        <Reveal as="span" class="kicker">Previous work</Reveal>
+        <Reveal as="h2" class="h1" delay="d1" style="margin-top:.3em">
+          Campaigns We&apos;ve Delivered
+        </Reveal>
+      </div>
+      <Reveal as="p" delay="d2">
+        Real brands. Real impact. Data-driven OOH campaigns that drive visibility and ROI across India.
+      </Reveal>
+    </div>
+
+    <Reveal class="proofshowcase__rows" delay="d2" aria-label="Previous work campaign showcase">
+      {rows.map((row) => {
+        const rowCards = [...row.cards, ...row.cards]
+
+        return (
+          <div class={`proofshowcase__rail proofshowcase__rail--${row.id}`}>
+            <div class="proofshowcase__track">
+              {rowCards.map(({ campaign, size }, index) => (
+                <article class={`campaigncard campaigncard--${size}`} aria-hidden={index >= row.cards.length ? 'true' : undefined}>
+                  <div class="campaigncard__media">
+                    <CampaignMedia campaign={campaign} />
+                  </div>
+                  <div class="campaigncard__body">
+                    <h3>{campaign.title}</h3>
+                    <p class="campaigncard__location">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 10c0 5-8 11-8 11s-8-6-8-11a8 8 0 1 1 16 0Z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      {campaign.location}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+    </Reveal>
+
+    <Reveal class="proofshowcase__cta" delay="d3">
+      <a class="btn btn--primary btn--lg" href="/work">
+        Explore More
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+    </Reveal>
+  </div>
+</section>

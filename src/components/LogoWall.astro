@@ -1,0 +1,19 @@
+---
+import Reveal from './Reveal.astro'
+import { logos } from '../data/brands'
+
+const { title = 'Brands that trust Conekt Ads' } = Astro.props
+---
+
+<section class="section--tight">
+  <div class="wrap">
+    <Reveal as="p" class="brands__title">{title}</Reveal>
+    <Reveal class="logowall" delay="d1">
+      {logos.map((logo) => (
+        <div class="logowall__cell">
+          <img src={logo.src} alt={logo.alt} />
+        </div>
+      ))}
+    </Reveal>
+  </div>
+</section>

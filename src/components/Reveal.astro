@@ -1,0 +1,7 @@
+---
+const { as: Tag = 'div', class: className = '', delay = '', ...attrs } = Astro.props
+---
+
+<Tag class:list={['reveal', delay, className]} {...attrs}>
+  <slot />
+</Tag>

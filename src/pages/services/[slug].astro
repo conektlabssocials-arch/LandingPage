@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Reveal from '../../components/Reveal.astro'
+import CtaBand from '../../components/CtaBand.astro'
+import { formats } from '../../data/services'
+import '../../styles/pages/services.css'
+
+export function getStaticPaths() {
+  return formats.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }))
+}
+
+const { service } = Astro.props
+const path = `/services/${service.slug}`
+const related = formats.filter((item) => item.slug !== service.slug).slice(0, 3)
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://conektads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://conektads.com/services' },
+      { '@type': 'ListItem', position: 3, name: service.tag, item: `https://conektads.com${path}` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.tag,
+    description: service.seoDescription,
+    provider: { '@id': 'https://conektads.com/#organization' },
+    areaServed: 'India',
+    url: `https://conektads.com${path}`,
+    serviceType: service.tag,
+  },
+]
+---
+
+<BaseLayout title={service.seoTitle} description={service.seoDescription} path={path} image={service.img} schema={schema} screenLabel={service.tag}>
+  <section class="pagehero">
+    <div class="wrap">
+      <Reveal as="span" class="kicker">{service.tag}</Reveal>
+      <Reveal as="h1" class="display" delay="d1" style="max-width:18ch">
+        {service.title}
+      </Reveal>
+      <Reveal as="p" class="lead" delay="d2" style="max-width:58ch">
+        {service.intro}
+      </Reveal>
+      <Reveal class="hero__actions" delay="d3">
+        <a class="btn btn--primary btn--lg" href="/contact">
+          Plan this campaign
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="/services">All services</a>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="wrap fmt">
+      <Reveal class="fmt__media">
+        <img src={service.img} alt={service.alt} />
+      </Reveal>
+      <Reveal class="fmt__body" delay="d1">
+        <span class="fmt__no">{service.no}</span>
+        <span class="svc__tag">{service.tag}</span>
+        <h2 class="h2">What this format gives your brand</h2>
+        <p class="lead">{service.lead}</p>
+        <ul class="fmt__pts">
+          {service.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight canvas">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Related services</Reveal>
+          <Reveal as="h2" class="h2" delay="d1" style="margin-top:.3em">Build a stronger media mix</Reveal>
+        </div>
+        <Reveal as="p" delay="d2">
+          Pair this format with complementary outdoor media for better reach, recall and frequency.
+        </Reveal>
+      </div>
+      <div class="addons">
+        {related.map((item) => (
+          <Reveal class="addon">
+            <span class="svc__tag">{item.tag}</span>
+            <h3 class="h3">{item.title}</h3>
+            <p>{item.lead}</p>
+            <p style="margin-top:16px">
+              <a class="arrowlink" href={`/services/${item.slug}`}>
+                Explore
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </a>
+            </p>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand bg="/assets/img/cta-street.webp" title={`Ready to launch ${service.tag}?`} lead="Tell us your audience, city and campaign goal. We'll recommend the right inventory and execution plan.">
+    <a class="btn btn--on-dark btn--lg" href="/contact">
+      Start a campaign
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+  </CtaBand>
+</BaseLayout>

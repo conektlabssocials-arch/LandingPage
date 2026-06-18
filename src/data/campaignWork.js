@@ -1,7 +1,7 @@
 const campaignWork = [
   {
     id: 'wispr-launch-auto-wraps',
-    image: 'assets/showcase/wispr3.JPG',
+    image: 'assets/showcase/wispr3.webp',
     alt: 'Wispr Flow auto wrap campaign in Bengaluru',
     type: 'Auto Ads',
     city: 'Bengaluru',
@@ -15,7 +15,7 @@ const campaignWork = [
   },
   {
     id: 'wispr-commuter-corridor',
-    image: 'assets/showcase/wispr2.JPG',
+    image: 'assets/showcase/wispr2.webp',
     alt: 'Wispr Flow commuter route branding in Bengaluru',
     type: 'Auto Ads',
     city: 'Bengaluru',
@@ -29,7 +29,7 @@ const campaignWork = [
   },
   {
     id: 'wispr-founder-moment',
-    image: 'assets/showcase/wisper1.JPG',
+    image: 'assets/showcase/wisper1.webp',
     alt: 'Wispr Flow founder-led outdoor campaign',
     type: 'OOH + Auto',
     city: 'Bengaluru',
@@ -43,7 +43,7 @@ const campaignWork = [
   },
   {
     id: 'hero-mobile-led-roadshow',
-    image: '/assets/img/cs-hero-led.jpg',
+    image: '/assets/img/cs-hero-led.webp',
     alt: 'Hero mobile LED campaign vehicle',
     type: 'Mobile LED',
     city: 'Multi-city',
@@ -71,7 +71,7 @@ const campaignWork = [
   },
   {
     id: 'snitch-led-launch',
-    image: '/assets/img/svc-led.jpg',
+    image: '/assets/img/svc-led.webp',
     alt: 'Snitch mobile LED vehicle campaign',
     type: 'Mobile LED',
     city: 'Bengaluru',
@@ -141,7 +141,7 @@ const campaignWork = [
   },
   {
     id: 'inorbit-retail-ooh',
-    image: '/assets/img/cs-inorbit.jpg',
+    image: '/assets/img/cs-inorbit.webp',
     alt: 'Inorbit Mall outdoor campaign planning',
     type: 'Billboard',
     city: 'Hubballi',

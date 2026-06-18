@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Reveal from '../components/Reveal.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { pages } from '../data/site'
+import { formats, incabItems, addons } from '../data/services'
+import '../styles/pages/services.css'
+
+const seo = pages['/services']
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://conektads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://conektads.com/services' },
+    ],
+  },
+  ...formats.map((service) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.tag,
+    description: service.lead,
+    provider: { '@id': 'https://conektads.com/#organization' },
+    areaServed: 'India',
+    url: `https://conektads.com/services/${service.slug}`,
+  })),
+]
+---
+
+<BaseLayout title={seo.title} description={seo.description} path="/services" image={seo.image} schema={schema} screenLabel="Services">
+  <section class="pagehero">
+    <div class="wrap">
+      <Reveal as="span" class="kicker">Our core services</Reveal>
+      <Reveal as="h1" class="display" delay="d1" style="max-width:18ch">
+        One agency.<br />
+        <span class="em-green">Every format.</span>
+      </Reveal>
+      <Reveal as="p" class="lead" delay="d2" style="max-width:54ch">
+        Strategic outdoor media solutions that put your brand where it matters most — from premium hoardings to streets that move with the city.
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="wrap fmtlist">
+      {formats.map((fmt) => (
+        <Reveal as="article" class="fmt" id={fmt.id}>
+          <div class="fmt__media">
+            <img src={fmt.img} alt={fmt.alt} />
+          </div>
+          <div class="fmt__body">
+            <span class="fmt__no">{fmt.no}</span>
+            <span class="svc__tag">{fmt.tag}</span>
+            <h2 class="h2">{fmt.title}</h2>
+            <p class="lead">{fmt.lead}</p>
+            <ul class="fmt__pts">
+              {fmt.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+            <p style="margin-top:18px">
+              <a class="arrowlink" href={`/services/${fmt.slug}`}>
+                View {fmt.tag} details
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </a>
+            </p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="wrap">
+      <div class="eyebrow-row">
+        <div>
+          <Reveal as="span" class="kicker">Inside the cab</Reveal>
+          <Reveal as="h2" class="h2" delay="d1" style="margin-top:.3em;max-width:18ch">
+            Every touchpoint of a taxi fleet, branded.
+          </Reveal>
+        </div>
+        <Reveal as="p" delay="d2">
+          Run any format on its own or combine them across an organised fleet for maximum recall on every ride.
+        </Reveal>
+      </div>
+      <div class="incab">
+        {incabItems.map((item) => (
+          <Reveal class="incab__item" delay={item.delay}>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight canvas">
+    <div class="wrap addons">
+      {addons.map((addon) => (
+        <Reveal class="addon" delay={addon.delay}>
+          <span class="svc__tag">{addon.tag}</span>
+          <h3 class="h3">{addon.title}</h3>
+          <p>{addon.desc}</p>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand bg="/assets/img/cta-street.webp" title="Not sure which format fits?" lead="Tell us your goal and audience — we'll plan the right mix across India's most impactful formats.">
+    <a class="btn btn--on-dark btn--lg" href="/contact">
+      Plan my campaign
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+    <a href="/work" class="btn btn--lg" style="color:#fff;border:1.5px solid rgba(255,255,255,.5)">See the work</a>
+  </CtaBand>
+</BaseLayout>
