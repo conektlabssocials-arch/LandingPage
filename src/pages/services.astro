@@ -48,7 +48,7 @@ const schema = [
       {formats.map((fmt) => (
         <Reveal as="article" class="fmt" id={fmt.id}>
           <div class="fmt__media">
-            <Image src={fmt.img} alt={fmt.alt} />
+            <Image src={fmt.img} alt={fmt.alt} sizes="(min-width: 900px) 44vw, 92vw" />
           </div>
           <div class="fmt__body">
             <span class="fmt__no">{fmt.no}</span>

@@ -19,5 +19,5 @@ const isVideo = /\.(mp4|webm|ogg)$/i.test(src.split('?')[0])
     preload="none"
   ></video>
 ) : (
-  <Image src={src} alt={campaign.alt} />
+  <Image src={src} alt={campaign.alt} sizes="(min-width: 900px) 32vw, 86vw" />
 )}

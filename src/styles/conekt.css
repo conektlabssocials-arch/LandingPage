@@ -109,8 +109,8 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-weight:var(--display-weight);
   border:1.5px solid transparent; transition:all .2s ease; white-space:nowrap;
 }
 .btn svg{ width:1.05em; height:1.05em; }
-.btn--primary{ background:var(--accent); color:#fff; box-shadow:var(--sh-green); }
-.btn--primary:hover{ background:var(--green-deep); transform:translateY(-2px); }
+.btn--primary{ background:var(--green-deep); color:#fff; box-shadow:var(--sh-green); }
+.btn--primary:hover{ background:var(--green-ink); transform:translateY(-2px); }
 .btn--dark{ background:var(--ink); color:#fff; }
 .btn--dark:hover{ background:#000; transform:translateY(-2px); }
 .btn--ghost{ background:transparent; color:var(--ink); border-color:var(--line); }

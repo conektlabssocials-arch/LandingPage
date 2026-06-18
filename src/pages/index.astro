@@ -87,6 +87,7 @@ const schema = [
             alt="Conekt Ads billboard, mobile LED truck and branded auto on a city road"
             loading="eager"
             fetchpriority="high"
+            sizes="(min-width: 1100px) 515px, (min-width: 760px) 42vw, 92vw"
           />
         </div>
         <div class="hero__badge">
@@ -128,7 +129,7 @@ const schema = [
       <div class="svc-grid">
         {services.map((svc) => (
           <Reveal as="article" class="svc card" delay={svc.delay}>
-            <div class="svc__img"><Image src={svc.img} alt={svc.alt} /></div>
+            <div class="svc__img"><Image src={svc.img} alt={svc.alt} sizes="(min-width: 1100px) 354px, (min-width: 760px) 30vw, 92vw" /></div>
             <div class="svc__body">
               <span class="svc__tag">{svc.tag}</span>
               <h3>{svc.title}</h3>
@@ -188,7 +189,7 @@ const schema = [
       </div>
       <div class="cslist">
         <Reveal as="article" class="cs">
-          <div class="cs__media"><Image src="/assets/img/cs-wispr.webp" alt="Wispr Flow branded auto in Bengaluru" /></div>
+          <div class="cs__media"><Image src="/assets/img/cs-wispr.webp" alt="Wispr Flow branded auto in Bengaluru" sizes="(min-width: 900px) 45vw, 92vw" /></div>
           <div class="cs__body">
             <span class="pill-tag">Auto + OOH · Bengaluru</span>
             <h3 class="h3">Bengaluru traffic became the media for Wispr Flow&apos;s India launch.</h3>
@@ -201,7 +202,7 @@ const schema = [
           </div>
         </Reveal>
         <Reveal as="article" class="cs">
-          <div class="cs__media"><Image src="/assets/img/cs-hero-led.webp" alt="Hero mobile LED vehicle campaign" /></div>
+          <div class="cs__media"><Image src="/assets/img/cs-hero-led.webp" alt="Hero mobile LED vehicle campaign" sizes="(min-width: 900px) 45vw, 92vw" /></div>
           <div class="cs__body">
             <span class="pill-tag">Mobile LED · Multi-city</span>
             <h3 class="h3">Taking Hero where it matters — across 25+ key routes.</h3>

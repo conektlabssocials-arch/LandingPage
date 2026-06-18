@@ -12,7 +12,7 @@ const { title = 'Brands that trust Conekt Ads' } = Astro.props
     <Reveal class="logowall" delay="d1">
       {logos.map((logo) => (
         <div class="logowall__cell">
-          <Image src={logo.src} alt={logo.alt} />
+          <Image src={logo.src} alt={logo.alt} sizes="(min-width: 900px) 150px, 40vw" />
         </div>
       ))}
     </Reveal>

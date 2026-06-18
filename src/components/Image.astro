@@ -7,16 +7,40 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority,
+  sizes,
+  srcset,
+  responsive = true,
   class: className,
   ...attrs
 } = Astro.props
 
 const normalizedSrc = normalizeImageSrc(src)
 const size = getImageSize(normalizedSrc)
+const responsiveWidths = [480, 720, 960, 1280, 1600, 1920]
+
+function variantSrc(src, width) {
+  const extIndex = src.lastIndexOf('.')
+  if (extIndex === -1) return src
+  return `${src.slice(0, extIndex)}-${width}${src.slice(extIndex)}`
+}
+
+const canUseResponsiveVariants = normalizedSrc.startsWith('/assets/img/')
+  || normalizedSrc.startsWith('/assets/showcase/')
+const candidateWidths = responsive && size && canUseResponsiveVariants
+  ? responsiveWidths.filter((width) => width < size.width)
+  : []
+const generatedSrcset = srcset || (candidateWidths.length
+  ? [
+      ...candidateWidths.map((width) => `${variantSrc(normalizedSrc, width)} ${width}w`),
+      `${normalizedSrc} ${size.width}w`,
+    ].join(', ')
+  : undefined)
 ---
 
 <img
   src={normalizedSrc}
+  srcset={generatedSrcset}
+  sizes={generatedSrcset ? (sizes || '100vw') : sizes}
   alt={alt}
   class={className}
   width={size?.width}
